@@ -1,0 +1,103 @@
+#md {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 300;
+  width: 100%;
+  height: 100%;
+  background: #00000056;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+#md.active {
+  display: flex;
+}
+
+#mdc {
+  width: 80%;
+  height: 80%;
+  background: #fff;
+  border-radius: 2rem;
+  overflow: hidden;
+}
+
+#mdt {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+#mds {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #848484;
+}
+
+#mdh {
+  height: 15%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.modal-content {
+  display: none;
+  height: 100%;
+}
+
+.modal-content.active {
+  display: block;
+}
+
+#mdb {
+  width: 100%;
+  height: 85%;
+  overflow: hidden;
+}
+
+#dp-md,
+#wd-md {
+  width: 100%;
+  padding: 2.5rem 5rem;
+}
+
+#mdb .label {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+#mdb .info {
+  color: #848484;
+  margin-top: 0.1rem;
+}
+
+#mdb .input {
+  display: flex;
+  align-items: center;
+}
+
+#mdb .unit {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+#mdb input {
+  width: 15rem;
+  padding: 1rem 2rem;
+  font-size: 1.3rem;
+  border-radius: 1rem;
+  margin-right: 1rem;
+}
+
+#send-wd-btn,
+#send-dp-btn {
+  margin-top: 3rem;
+  font-size: 1.2rem;
+  padding: 1rem 2rem;
+  width: 8rem;
+}

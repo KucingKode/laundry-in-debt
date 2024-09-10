@@ -1,0 +1,39 @@
+#a {
+  width: 100%;
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+#a * {
+  z-index: 10000;
+}
+
+#ac {
+  width: 80%;
+  border-radius: 1rem;
+  margin: auto;
+  margin-top: 1rem;
+  padding: 1rem 2rem;
+  pointer-events: none;
+  transform: translateY(-2rem);
+  opacity: 0;
+  background: #0000;
+  transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.5);
+}
+
+#ac.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+  background: #e90c0c;
+}
+
+#amsg {
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 700;
+}

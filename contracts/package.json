@@ -1,0 +1,18 @@
+{
+  "name": "hardhat-javascript-starter",
+  "scripts": {
+    "test": "hardhat test",
+    "build": "thirdweb detect",
+    "_deploy": "thirdweb deploy -k $SECRET_KEY",
+    "deploy": "dotenv -- npm run _deploy"
+  },
+  "devDependencies": {
+    "@matterlabs/hardhat-zksync-solc": "^0.3.17",
+    "dotenv-cli": "^7.4.2",
+    "hardhat": "^2.13.0"
+  },
+  "dependencies": {
+    "@thirdweb-dev/contracts": "^3.8.0",
+    "zksync-web3": "^0.14.3"
+  }
+}

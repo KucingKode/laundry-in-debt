@@ -1,0 +1,46 @@
+@keyframes typing {
+  0% {
+    width: 0;
+  }
+
+  50% {
+    width: 100%;
+  }
+
+  100% {
+    width: 0;
+  }
+}
+
+@keyframes alert-in {
+  from {
+    transform: translateY(-3rem);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+
+  50% {
+    border-color: #ca1111;
+  }
+}
+
+@keyframes nft {
+  from {
+    background-position: 0;
+  }
+
+  to {
+    background-position: 288px;
+  }
+}

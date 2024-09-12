@@ -58,26 +58,10 @@ export const $wdSendBtn = $("#send-wd-btn");
 // nft modal
 export const $machinesModal = $("#m-md");
 export const cards = [$("#m1"), $("#m2"), $("#m3")];
-export const installs = [
-	$("#m1 .i"),
-	$("#m2 .i"),
-	$("#m3 .i"),
-];
-export const uninstalls = [
-	$("#m1 .ui"),
-	$("#m2 .ui"),
-	$("#m3 .ui"),
-];
-export const buys = [
-	$("#m1 .b"),
-	$("#m2 .b"),
-	$("#m3 .b"),
-];
-export const sells = [
-	$("#m1 .s"),
-	$("#m2 .s"),
-	$("#m3 .s"),
-];
+export const installs = [$("#m1 .i"), $("#m2 .i"), $("#m3 .i")];
+export const uninstalls = [$("#m1 .ui"), $("#m2 .ui"), $("#m3 .ui")];
+export const buys = [$("#m1 .b"), $("#m2 .b"), $("#m3 .b")];
+export const sells = [$("#m1 .s"), $("#m2 .s"), $("#m3 .s")];
 
 export const sellLabels = [
 	$("#m1 .s span"),

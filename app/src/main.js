@@ -14,7 +14,7 @@ import "../styles/main.css";
 import "../styles/modal.css";
 
 async function main() {
-	$alertContainer.ondblclick = hideAlert;
+	$alertContainer.onclick = hideAlert;
 
 	$app.style.width = `${WIDTH}px`;
 	$app.style.height = `${HEIGHT}px`;
@@ -25,6 +25,7 @@ async function main() {
 	await loadScene();
 	$loadScene.classList.remove("active");
 	$mainScene.classList.add("active");
+
 	mainScene();
 }
 

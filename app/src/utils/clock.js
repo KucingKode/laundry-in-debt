@@ -1,13 +1,17 @@
+import { phoneSfx } from "../assets/zzfx";
 import { CLOCK_MULT, ONE_DAY_SEC } from "../constants";
 import { $clockCountdown, $clockTime } from "../elements";
+import { zzfx } from "../libs/zzfxm";
 import { floor } from "./math";
 
+let prevHour = 0;
 export function updateClock() {
-	const multNow = floor(Date.now() * CLOCK_MULT / 1000);
+	const multNow = floor((Date.now() * CLOCK_MULT) / 1000);
 	const hours = floor((multNow % ONE_DAY_SEC) / 3600);
 	const minutes = floor((multNow % 3600) / 60);
 
-	if (hours === 13 && minutes === 0) zzfx(...[,0,1600,.13,.52,.61,1,1.1,,,,,,.1,,.14])
+	if (hours !== prevHour) zzfx(...phoneSfx);
+	prevHour = hours;
 
 	$clockTime.innerText = `${hours < 10 ? "0" : ""}${hours}:${
 		minutes < 10 ? "0" : ""

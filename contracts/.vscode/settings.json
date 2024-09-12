@@ -1,3 +1,6 @@
 {
-    "solidity.packageDefaultDependenciesDirectory": "node_modules"
+    "solidity.packageDefaultDependenciesDirectory": [
+        "node_modules",
+        "lib"
+    ]
 }

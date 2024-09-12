@@ -1,26 +1,24 @@
-import {
-	createThirdwebClient,
-	defineChain,
-	readContract as twReadContract,
-	prepareContractCall,
-	sendTransaction,
-	waitForReceipt,
-} from "https://cdn.jsdelivr.net/npm/thirdweb@5.52.0/+esm";
-
 import { account, client } from "../states";
 import { showAlert } from "./alert";
 import { CLIENT_ID } from "../constants";
-
-export const chain = defineChain(43113);
+import { thirdweb } from "../libs/externals";
 
 export function connectThirdweb() {
-	client.v = createThirdwebClient({ clientId: CLIENT_ID });
+	client.v = thirdweb.createThirdwebClient({ clientId: CLIENT_ID });
+}
+
+export async function getContract(address) {
+	return thirdweb.getContract({
+		client: client.v,
+		chain: thirdweb.defineChain(43113),
+		address,
+	});
 }
 
 export async function readContract(contract, method, params) {
 	if (!account.v) return;
 
-	return await twReadContract({
+	return await thirdweb.readContract({
 		contract,
 		method,
 		params,
@@ -31,20 +29,20 @@ export async function callContract(contract, method, params) {
 	if (!account.v) return;
 
 	try {
-		const transaction = await prepareContractCall({
+		const transaction = await thirdweb.prepareContractCall({
 			contract,
 			method,
 			params,
 		});
 
-		const { transactionHash } = await sendTransaction({
+		const { transactionHash } = await thirdweb.sendTransaction({
 			account: account.v,
 			transaction,
 		});
 
-		return waitForReceipt({
+		return thirdweb.waitForReceipt({
 			client: client.v,
-			chain,
+			chain: thirdweb.defineChain(43113),
 			transactionHash,
 		});
 	} catch (err) {

@@ -1,4 +1,5 @@
 import { DECIMALS } from "./constants";
+import { bigInt } from "./utils/math";
 
 function createState(x) {
 	return { v: x };
@@ -24,14 +25,14 @@ export const cameraOffsetY = createState(0);
 export const activeTileX = createState(0);
 export const activeTileY = createState(0);
 
-export const mouseX = createState(0);
-export const mouseY = createState(0);
-export const mousePressed = createState(false);
+export const pointerX = createState(0);
+export const pointerY = createState(0);
+export const pointerPressed = createState(false);
 
 export const machineBids = createState([
-	BigInt(100 * DECIMALS),
-	BigInt(200 * DECIMALS),
-	BigInt(300 * DECIMALS)
+	bigInt(100 * DECIMALS),
+	bigInt(300 * DECIMALS),
+	bigInt(600 * DECIMALS),
 ]);
 export const machineAsks = createState([]);
 

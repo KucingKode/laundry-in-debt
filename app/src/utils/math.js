@@ -8,8 +8,13 @@ export function getPair(x, y) {
 	return x >= y ? x * x + x + y : x + y * y;
 }
 
-export function randomInt(max) {
-	return Math.floor(Math.random() * max);
-}
+export const random = Math.random;
+export const floor = Math.floor;
+export const ceil = Math.ceil;
+export const round = Math.round;
+export const bigInt = BigInt;
+export const number = Number;
 
-export const floor = Math.floor
+export function randomInt(max) {
+	return floor(random() * max);
+}

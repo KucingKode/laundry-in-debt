@@ -1,4 +1,4 @@
-import { ethers } from "https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.min.js";
+import { ethers } from "../libs/externals";
 import { account, playerAddress, provider } from "../states";
 import { alignTxToEthers } from "../utils/web3";
 import { CHAIN_ID, CHAIN_NAME, EXPLORER_URL, RPC_URL } from "../constants";

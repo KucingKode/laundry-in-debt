@@ -9,7 +9,7 @@ import {
 
 import { $tokenAmount } from "../elements";
 
-import { CLOCK_MULT, ONE_DAY, ONE_DAY_SEC, ONE_OCLOCK_SEC } from "../constants";
+import { CLOCK_MULT, ONE_DAY_SEC, THIRTEEN_HOURS_SEC } from "../constants";
 import { floor } from "./math";
 
 export const assets = {
@@ -31,16 +31,18 @@ export function formatNum(x) {
 
 // balance calculation
 export function updateTokenAmount() {
-	const multNow = floor(Date.now() * CLOCK_MULT / 1000);
+	const multNow = floor((Date.now() * CLOCK_MULT) / 1000);
 	const multLast = playerLastUpdate.v * CLOCK_MULT;
-	
+
 	const days0 = floor(multLast / ONE_DAY_SEC);
 	const days1 = floor(multNow / ONE_DAY_SEC);
-	const hours = multNow % ONE_DAY_SEC;
-	
+	const hours0 = multLast % ONE_DAY_SEC;
+	const hours1 = multNow % ONE_DAY_SEC;
+
 	const timeDiff = multNow - multLast;
 	let paymentCount = days1 - days0;
-	if (hours >= ONE_OCLOCK_SEC) paymentCount++;
+	if (hours1 >= THIRTEEN_HOURS_SEC && hours0 < THIRTEEN_HOURS_SEC)
+		paymentCount++;
 
 	const income = playerIncome.v * timeDiff;
 	const expense = playerExpense.v * paymentCount * ONE_DAY_SEC;

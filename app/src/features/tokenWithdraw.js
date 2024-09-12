@@ -15,7 +15,7 @@ export function enableTokenWithdraw() {
 	$wdBtn.onclick = async () => {
 		showModal(
 			"Withdraw Sanitized Coin (SANC)",
-			"Transfer SANC from your laundromat to your wallet",
+			"Transfer SANC to your wallet",
 			$wdModal,
 		);
 

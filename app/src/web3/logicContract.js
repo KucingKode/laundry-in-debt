@@ -1,18 +1,16 @@
-import { getContract } from "https://cdn.jsdelivr.net/npm/thirdweb@5.52.0/+esm";
-import { DECIMALS, DECIMALS_BI, LOGIC_CONTRACT_ADDRESS, ONE_DAY } from "../constants";
-import { callContract, chain, readContract } from "../utils/web3";
+import {
+	DECIMALS,
+	DECIMALS_BI,
+	LOGIC_CONTRACT_ADDRESS,
+	ONE_DAY,
+} from "../constants";
+import { callContract, getContract, readContract } from "../utils/web3";
 import { requestMachineApproval } from "./machineContract";
 import { getTokenAllowance, requestTokenApproval } from "./tokenContract";
-import {
-	$tokenAmount,
-	$tokenExpense,
-	$tokenIncome,
-	sellLabels,
-} from "../elements";
+import { $tokenExpense, $tokenIncome, sellLabels } from "../elements";
 import { formatNum, updateTokenAmount } from "../utils/other";
 import {
 	account,
-	client,
 	machineAsks,
 	machineBids,
 	playerBalance,
@@ -22,39 +20,37 @@ import {
 	playerLastUpdate,
 	playerMachineCount,
 } from "../states";
-import { clamp } from "../utils/math";
+import { bigInt, number } from "../utils/math";
+import { zzfx } from "../libs/zzfxm";
+import { machineSfx } from "../assets/zzfx";
 
 const GET_MACHINE_METHOD =
-	"function getMachine(address, uint64) view returns (uint16)";
+	"function getMachine(address,uint64) view returns (uint32)";
 
 const GET_PLAYER_DATA_METHOD =
-	"function players(address) view returns (bool, uint256, uint256, uint256, uint256, uint256, uint256)";
+	"function players(address) view returns (bool,uint256,uint256,uint256,uint256,uint256,uint256)";
 
 const DEPOSIT_METHOD = "function deposit(uint256)";
 
 const WITHDRAW_METHOD = "function withdraw(uint256)";
 
-const STAKE_METHOD = "function stakeMachine(uint16, uint64)";
+const STAKE_METHOD = "function stakeMachine(uint32,uint64)";
 
 const UNSTAKE_METHOD = "function unstakeMachine(uint64)";
 
-const BUY_METHOD = "function buyMachine(uint16, uint256)";
+const BUY_METHOD = "function buyMachine(uint32,uint256)";
 
-const SELL_METHOD = "function sellMachine(uint16, uint256)";
+const SELL_METHOD = "function sellMachine(uint32,uint256)";
 
 const CREATE_PLAYER_METHOD = "function createPlayer()";
 
 const GET_MARKET_ITEM_METHOD =
-	"function marketItems(uint16) view returns (bool, uint256, uint256, uint32)";
+	"function marketItems(uint32) view returns (bool,uint256,uint256,uint32)";
 
 let contract;
 
-export function initLogicContract() {
-	contract = getContract({
-		client: client.v,
-		chain,
-		address: LOGIC_CONTRACT_ADDRESS,
-	});
+export async function initLogicContract() {
+	contract = await getContract(LOGIC_CONTRACT_ADDRESS);
 }
 
 // ---- readers ------
@@ -64,7 +60,7 @@ export async function getMachine(pair) {
 		pair,
 	]);
 
-	return Number(data);
+	return number(data);
 }
 
 export function getPlayerData() {
@@ -76,16 +72,17 @@ export function getSellPrices() {
 	return new Promise((resolve) => {
 		const getPriceFactor = async (id) => {
 			const i = id - 1;
+			console.log(account);
 			const priceFactor = (
 				await readContract(contract, GET_MARKET_ITEM_METHOD, [id])
 			)[2];
 
 			// calculate ask price
-			let marginedPriceFactor = priceFactor - DECIMALS_BI * 3n / 100n;
+			let marginedPriceFactor = priceFactor - (DECIMALS_BI * 3n) / 100n;
 			if (marginedPriceFactor < 0n) marginedPriceFactor = 0n;
-			machineAsks.v[i] = machineBids.v[i] * marginedPriceFactor / DECIMALS_BI;
+			machineAsks.v[i] = (machineBids.v[i] * marginedPriceFactor) / DECIMALS_BI;
 
-			sellLabels[i].innerText = formatNum(Number(machineAsks.v[i]) / DECIMALS);
+			sellLabels[i].innerText = formatNum(number(machineAsks.v[i]) / DECIMALS);
 
 			++n === machineBids.v.length && resolve();
 		};
@@ -102,14 +99,14 @@ export function createAccount() {
 }
 
 export async function deposit(amount) {
-	const amountbi = BigInt(amount) * DECIMALS_BI;
+	const amountbi = bigInt(amount) * DECIMALS_BI;
 	if ((await getTokenAllowance()) < amountbi)
 		await requestTokenApproval(amount);
 	return callContract(contract, DEPOSIT_METHOD, [amountbi]);
 }
 
 export const withdraw = (amount) =>
-	callContract(contract, WITHDRAW_METHOD, [BigInt(amount) * DECIMALS_BI]);
+	callContract(contract, WITHDRAW_METHOD, [bigInt(amount) * DECIMALS_BI]);
 
 export async function stake(id, pair) {
 	await requestMachineApproval();
@@ -121,12 +118,16 @@ export const unstake = (pair) => {
 };
 
 export async function buy(id, bid) {
-	return callContract(contract, BUY_METHOD, [id, bid]);
+	const receipt = await callContract(contract, BUY_METHOD, [id, bid]);
+	receipt && zzfx(...machineSfx);
+	return receipt;
 }
 
 export async function sell(id, ask) {
 	await requestMachineApproval();
-	return callContract(contract, SELL_METHOD, [id, ask]);
+	const receipt = await callContract(contract, SELL_METHOD, [id, ask]);
+	receipt && zzfx(...machineSfx);
+	return receipt;
 }
 
 // ------ other ----------
@@ -135,11 +136,11 @@ export async function updatePlayerData() {
 
 	const data = await getPlayerData();
 
-	playerDebt.v = Number(data[1]) / DECIMALS;
-	playerBalance.v = Number(data[2]) / DECIMALS;
-	playerExpense.v = Number(data[3]) / DECIMALS;
-	playerIncome.v = Number(data[4]) / DECIMALS;
-	playerLastUpdate.v = Number(data[5]);
+	playerDebt.v = number(data[1]) / DECIMALS;
+	playerBalance.v = number(data[2]) / DECIMALS;
+	playerExpense.v = number(data[3]) / DECIMALS;
+	playerIncome.v = number(data[4]) / DECIMALS;
+	playerLastUpdate.v = number(data[5]);
 	playerMachineCount.v = data[6];
 
 	updateTokenAmount();

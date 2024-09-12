@@ -3,7 +3,6 @@ import { playerAddress } from "../states";
 
 export function enableWalletConnector() {
 	$walletConnector.onclick = () => window.location.reload();
-	$walletConnector.style.cursor = "pointer";
 
 	// show connected wallet address
 	$walletAddress.innerText = playerAddress.v

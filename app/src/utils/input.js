@@ -1,17 +1,18 @@
+import { clickSfx } from "../assets/zzfx";
 import { $app } from "../elements";
 import { zzfx } from "../libs/zzfxm";
-import { mousePressed, mouseX, mouseY } from "../states";
+import { pointerPressed, pointerX, pointerY } from "../states";
 
-$app.addEventListener("mousemove", (e) => {
-	mouseX.v = e.pageX;
-	mouseY.v = e.pageY;
+$app.addEventListener("pointermove", (e) => {
+	pointerX.v = e.pageX;
+	pointerY.v = e.pageY;
 });
 
-window.addEventListener("mousedown", () => {
-	mousePressed.v = true;
-	zzfx(...[,,539,0,.04,.29,1,1.92,,,567,.02,.02,,,,.04])
+window.addEventListener("pointerdown", () => {
+	pointerPressed.v = true;
+	zzfx(...clickSfx);
 });
 
-window.addEventListener("mouseup", () => {
-	mousePressed.v = false;
+window.addEventListener("pointerup", () => {
+	pointerPressed.v = false;
 });

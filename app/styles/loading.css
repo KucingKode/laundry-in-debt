@@ -15,8 +15,6 @@
   overflow: hidden;
   border-right: 0.15em solid #ca1111;
   font-size: 2rem;
-  text-align: center;
-  color: #161616;
   white-space: nowrap;
   margin: 0 auto;
   letter-spacing: 0.1em;
@@ -26,4 +24,5 @@
 
 #lt span {
   font-size: 2rem;
+  margin: 0 0.5rem;
 }

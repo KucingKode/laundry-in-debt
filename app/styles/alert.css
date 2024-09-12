@@ -10,6 +10,7 @@
 
 #a * {
   z-index: 10000;
+  color: #fff;
 }
 
 #ac {
@@ -18,7 +19,6 @@
   margin: auto;
   margin-top: 1rem;
   padding: 1rem 2rem;
-  pointer-events: none;
   transform: translateY(-2rem);
   opacity: 0;
   background: #0000;
@@ -28,8 +28,8 @@
 #ac.active {
   opacity: 1;
   transform: translateY(0);
-  pointer-events: all;
   background: #e90c0c;
+  pointer-events: all;
 }
 
 #amsg {

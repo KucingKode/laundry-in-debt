@@ -1,13 +1,13 @@
 import { renderObjects, renderTiles, searchMachine } from "../utils/render";
 import { clamp } from "../utils/math";
-import { WIDTH, HEIGHT, MAX_OFFSET_X, MAX_OFFSET_Y } from "../constants";
+import { WIDTH, HEIGHT, MAX_OFFSET } from "../constants";
 import {
 	appScale,
 	cameraOffsetX,
 	cameraOffsetY,
-	mousePressed,
-	mouseX,
-	mouseY,
+	pointerPressed,
+	pointerX,
+	pointerY,
 	playerMachineCount,
 } from "../states";
 import {
@@ -28,6 +28,7 @@ import { updateTokenAmount } from "../utils/other";
 import { enableMachineStore } from "../features/machineStore";
 import { hideModal } from "../utils/modal";
 import { zzfx } from "../libs/zzfxm";
+import { coinSfx } from "../assets/zzfx";
 
 const PAN_SPEED = 10;
 
@@ -42,14 +43,14 @@ export async function mainScene() {
 
 	// intervals
 	setInterval(() => {
-		updateTokenAmount();
-		if (playerMachineCount.v > 0) {
-			zzfx(...[0.3,,1675,,.06,.24,1,1.82,,,837,.06])
-		}
-	}, 1000);
+		updateClock();
+	}, 100);
 
 	setInterval(() => {
-		updateClock();
+		updateTokenAmount();
+		if (playerMachineCount.v > 0) {
+			zzfx(...coinSfx);
+		}
 	}, 1000);
 
 	// return to 0, 0 action
@@ -67,8 +68,8 @@ export async function mainScene() {
 	enableMachineStore();
 	enableWalletConnector();
 
-	$app.addEventListener("mousemove", updateBackground);
-	window.addEventListener("mouseup", () => {
+	$app.addEventListener("pointermove", updateBackground);
+	window.addEventListener("pointerup", () => {
 		prevMouseX = null;
 		prevMouseY = null;
 	});
@@ -93,27 +94,27 @@ export function updateBackground(e) {
 
 	const ctx = bgCtx;
 
-	// update map panning if mouse dragged
-	if (mousePressed.v) {
+	// update map panning if pointer dragged
+	if (pointerPressed.v) {
 		if (prevMouseX && prevMouseY) {
 			cameraOffsetX.v +=
-				((prevMouseX - mouseX.v) / window.innerWidth) * PAN_SPEED;
+				((prevMouseX - pointerX.v) / window.innerWidth) * PAN_SPEED;
 			cameraOffsetY.v +=
-				((prevMouseY - mouseY.v) / window.innerWidth) * PAN_SPEED;
+				((prevMouseY - pointerY.v) / window.innerWidth) * PAN_SPEED;
 		}
 
-		cameraOffsetX.v = clamp(cameraOffsetX.v, 0, MAX_OFFSET_X);
-		cameraOffsetY.v = clamp(cameraOffsetY.v, 0, MAX_OFFSET_Y);
+		cameraOffsetX.v = clamp(cameraOffsetX.v, 0, MAX_OFFSET);
+		cameraOffsetY.v = clamp(cameraOffsetY.v, 0, MAX_OFFSET);
 
-		prevMouseX = mouseX.v;
-		prevMouseY = mouseY.v;
+		prevMouseX = pointerX.v;
+		prevMouseY = pointerY.v;
 	}
 
 	// get canvas position
 	const top = (window.innerHeight - HEIGHT * appScale.v) / 2;
 	const left = (window.innerWidth - WIDTH * appScale.v) / 2;
 
-	renderTiles(ctx, mouseX.v - left, mouseY.v - top);
+	renderTiles(ctx, pointerX.v - left, pointerY.v - top);
 }
 
 // make offset to (0, 0)

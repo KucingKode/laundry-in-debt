@@ -55,7 +55,6 @@ span {
   border-radius: 1rem;
   box-shadow: 0 3.3px 3.3px #00000040;
   min-width: 8rem;
-  cursor: pointer;
 }
 
 .btn {
@@ -68,7 +67,6 @@ span {
   color: #fff;
   margin: 0 0 0.5rem;
   padding: 1rem 3rem;
-  cursor: pointer;
 }
 
 .btn:hover {

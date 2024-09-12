@@ -1,5 +1,11 @@
 {
 	"organizeImports": {
 		"enabled": false
+	},
+	"formatter": {
+		"ignore": ["./src/assets", "./src/libs"]
+	},
+	"linter": {
+		"ignore": ["./src/assets", "./src/libs"]
 	}
 }

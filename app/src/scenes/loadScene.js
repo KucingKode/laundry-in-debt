@@ -16,7 +16,8 @@ import {
 import { initTokenContract } from "../web3/tokenContract";
 import { connectWallet, existWallet, switchToAvax } from "../web3/wallet";
 import { zzfxM, zzfxP } from "../libs/zzfxm";
-import { bgmData } from "../assets/bgm"
+import { bgm } from "../assets/zzfx";
+import { fetchExternals } from "../libs/externals";
 
 export async function loadScene() {
 	const setMsg = (msg) => {
@@ -25,17 +26,19 @@ export async function loadScene() {
 
 	setMsg("Please click your screen to start loading the game!");
 	await waitUserClick();
-	document.body.requestFullscreen()
+	document.body.requestFullscreen();
 
-	zzfxP(...zzfxM(...bgmData));
+	zzfxP(...zzfxM(...bgm));
 	setInterval(() => {
-		zzfxP(...zzfxM(...bgmData));
-	}, 9000)
+		zzfxP(...zzfxM(...bgm));
+	}, 8000);
 
-	setMsg("Checking your warehouse...");
+	setMsg("Connecting to the outside world...");
 	await loadAsssets();
+	if (!(await fetchExternals())) {
+		return showAlert("External libraries not loaded!", true);
+	}
 
-	setMsg("Looking for ethereum wallet...");
 	if (!existWallet()) {
 		return showAlert(
 			"Ethereum wallet required. Please install metamask!",
@@ -49,18 +52,16 @@ export async function loadScene() {
 	setMsg("Switching to Avalanche chain");
 	const isSwitchSuccess = await switchToAvax();
 	if (!isSwitchSuccess) {
-		return showAlert(
-			"Failed to switch chain to Avalanche!",
-		);
+		return showAlert("Failed to switch chain to Avalanche!");
 	}
 
 	setMsg("Creating Thirdweb client...");
 	connectThirdweb();
 
 	// load contract
-	initLogicContract();
-	initTokenContract();
-	initMachineContract();
+	await initLogicContract();
+	await initTokenContract();
+	await initMachineContract();
 
 	setMsg("Checking NFT transfer approval...");
 	if (!(await getMachineApproval())) {

@@ -4,6 +4,7 @@ canvas {
   position: fixed;
   top: 0;
   left: 0;
+  touch-action: none;
 }
 
 img,
@@ -175,7 +176,7 @@ video {
   margin: 0 auto;
   margin-bottom: 10rem;
   image-rendering: pixelated;
-  animation: nft 0.7s steps(9) infinite;
+  animation: nft 0.7s steps(8) infinite;
 }
 
 .m1 {

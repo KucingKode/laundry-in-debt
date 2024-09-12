@@ -1,3 +1,5 @@
+import { bigInt } from "./utils/math";
+
 export const CLIENT_ID = import.meta.env.VITE_CLIENT_ID;
 export const CHAIN_NAME = import.meta.env.VITE_CHAIN_NAME;
 export const CHAIN_ID = import.meta.env.VITE_CHAIN_ID;
@@ -14,16 +16,16 @@ export const WIDTH = 1600;
 export const HEIGHT = 900;
 export const TILE_SIZE = 125;
 export const MAX_CUSTOMER_COUNT = 20;
-export const MAX_OFFSET_X = 4294967295;
-export const MAX_OFFSET_Y = 4294967295;
-export const DECIMALS_BI = 1_000_000_000_000_000_000n;
-export const DECIMALS = Number(DECIMALS_BI);
-export const CLOCK_MULT = 10;
+export const MAX_OFFSET = 4294967295;
+export const DECIMALS = Math.pow(10, 18);
+export const DECIMALS_BI = bigInt(DECIMALS);
+export const CLOCK_MULT = 100;
 
 export const CAMERA_WIDTH = 1600;
 export const CAMERA_HEIGHT = 900;
 export const MAP_MARGIN = 2;
+export const MAP_MARGIN_DEV = 1;
 
-export const ONE_DAY_SEC = 24 * 3600;
-export const ONE_OCLOCK_SEC = 13 * 3600;
+export const ONE_DAY_SEC = 86400;
+export const THIRTEEN_HOURS_SEC = 46800;
 export const ONE_DAY = ONE_DAY_SEC * 1000;

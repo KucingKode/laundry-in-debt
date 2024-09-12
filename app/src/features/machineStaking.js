@@ -12,17 +12,13 @@ import { getPair } from "../utils/math";
 import { stake, unstake } from "../web3/logicContract";
 import { showModal } from "../utils/modal";
 import { getMachineAmounts } from "../web3/machineContract";
+import { zzfx } from "../libs/zzfxm";
+import { machineSfx } from "../assets/zzfx";
 
 export function enableMachineStaking() {
 	$fgCanvas.ondblclick = async () => {
-		let prevX = activeTileX.v;
-		let prevY = activeTileY.v;
-
 		$machinesModal.classList.add("install");
 		$machinesModal.classList.remove("store");
-
-		activeTileX.v = prevX;
-		activeTileY.v = prevY;
 
 		const machineAmounts = await getMachineAmounts();
 		const pair = getPair(activeTileX.v, activeTileY.v);
@@ -36,7 +32,7 @@ export function enableMachineStaking() {
 		}
 
 		showModal(
-			"Install or Remove Machine at Laundromat",
+			"Install and Uninstall Machines",
 			"Installed machine on this tile will be returned to you",
 			$machinesModal,
 		);
@@ -68,6 +64,7 @@ async function uninstallMachine() {
 	const isSuccess = await unstake(pair);
 	if (!isSuccess) return;
 
+	zzfx(...machineSfx);
 	delete machines[pair];
 	$modal.click();
 }

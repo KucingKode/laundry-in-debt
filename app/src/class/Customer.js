@@ -1,6 +1,7 @@
 import { assets } from "../utils/other";
 import { TILE_SIZE } from "../constants";
 import { cameraOffsetX, cameraOffsetY } from "../states";
+import { floor, random, round } from "../utils/math";
 
 export const CUSTOMER_FRAMES = 4;
 const SIZE = 50;
@@ -20,27 +21,27 @@ class Customer {
 		this.vy = 0;
 		this.ix = 0;
 		this.iy = 0;
-		this.remainingSteps = 0;
+		this.remSteps = 0;
 		// biome-ignore lint: shorter code
 		this.img = assets["c" + id];
 		this.steps = steps;
-		this.frameI = Math.floor(Math.random() * CUSTOMER_FRAMES);
+		this.frameI = floor(random() * CUSTOMER_FRAMES);
 
 		this.move();
 		this.update();
 	}
 
 	move() {
-		const directionI = Math.floor(Math.random() * directions.length);
+		const directionI = floor(random() * directions.length);
 		const direction = directions[directionI];
 
 		this.vx = direction[0];
 		this.vy = direction[1];
-		this.remainingSteps = this.steps;
+		this.remSteps = this.steps;
 	}
 
 	update() {
-		if (this.remainingSteps === 1) {
+		if (this.remSteps === 1) {
 			this.ix = this.ix0 + this.vx;
 			this.iy = this.iy0 + this.vy;
 			this.ix0 = this.ix;
@@ -48,11 +49,11 @@ class Customer {
 
 			this.move();
 		} else {
-			this.ix = this.ix0 + this.vx * (1 - this.remainingSteps / this.steps);
-			this.iy = this.iy0 + this.vy * (1 - this.remainingSteps / this.steps);
+			this.ix = this.ix0 + this.vx * (1 - this.remSteps / this.steps);
+			this.iy = this.iy0 + this.vy * (1 - this.remSteps / this.steps);
 		}
 
-		this.remainingSteps--;
+		this.remSteps--;
 	}
 
 	render(ctx) {
@@ -62,8 +63,8 @@ class Customer {
 			0,
 			FRAME_SIZE,
 			FRAME_SIZE,
-			Math.round((this.ix - cameraOffsetX.v) * TILE_SIZE) - SIZE / 2,
-			Math.round((this.iy - cameraOffsetY.v) * TILE_SIZE) - SIZE / 2,
+			round((this.ix - cameraOffsetX.v) * TILE_SIZE) - SIZE / 2,
+			round((this.iy - cameraOffsetY.v) * TILE_SIZE) - SIZE / 2,
 			SIZE,
 			SIZE,
 		);

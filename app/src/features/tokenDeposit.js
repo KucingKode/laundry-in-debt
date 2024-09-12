@@ -15,7 +15,7 @@ export function enableTokenDeposit() {
 	$dpBtn.onclick = async () => {
 		showModal(
 			"Deposit Sanitized Coin (SANC)",
-			"Move SANC from your wallet to your laundromat",
+			"Move SANC to your laundromat",
 			$dpModal,
 		);
 

@@ -18,13 +18,7 @@ export function enableMachineStore() {
 			e.style.display = "flex";
 		});
 
-		// update price
-
-		showModal(
-			"Wallow's Store",
-			"Buy and Sell Machines and Power-Ups",
-			$machinesModal,
-		);
+		showModal("Wallow's Store", "Buy and Sell Machines", $machinesModal);
 	};
 
 	buys.map((e, i) => {

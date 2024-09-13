@@ -5,6 +5,7 @@ export const CHAIN_NAME = import.meta.env.VITE_CHAIN_NAME;
 export const CHAIN_ID = import.meta.env.VITE_CHAIN_ID;
 export const EXPLORER_URL = import.meta.env.VITE_EXPLORER_URL;
 export const RPC_URL = import.meta.env.VITE_RPC_URL;
+export const CHAIN_NUMBER = +import.meta.env.VITE_CHAIN_NUMBER;
 
 export const TOKEN_ADDRESS = import.meta.env.VITE_TOKEN_ADDRESS;
 export const MACHINE_EDITION_ADDRESS = import.meta.env

@@ -1,6 +1,6 @@
 import { account, client } from "../states";
 import { showAlert } from "./alert";
-import { CLIENT_ID } from "../constants";
+import { CHAIN_NUMBER, CLIENT_ID } from "../constants";
 import { thirdweb } from "../libs/externals";
 
 export function connectThirdweb() {
@@ -10,7 +10,7 @@ export function connectThirdweb() {
 export async function getContract(address) {
 	return thirdweb.getContract({
 		client: client.v,
-		chain: thirdweb.defineChain(43113),
+		chain: thirdweb.defineChain(CHAIN_NUMBER),
 		address,
 	});
 }
@@ -42,7 +42,7 @@ export async function callContract(contract, method, params) {
 
 		return thirdweb.waitForReceipt({
 			client: client.v,
-			chain: thirdweb.defineChain(43113),
+			chain: thirdweb.defineChain(CHAIN_NUMBER),
 			transactionHash,
 		});
 	} catch (err) {
@@ -53,7 +53,10 @@ export async function callContract(contract, method, params) {
 	return;
 }
 
-// code from thirdweb/adapters/ethers6.ts
+/**
+ * Thirdweb SDK v5.52.0 by Non-Fungible Labs, Inc
+ * Apache 2.0 License
+ */
 export function alignTxToEthers(tx) {
 	const { type: viemType, ...rest } = tx;
 

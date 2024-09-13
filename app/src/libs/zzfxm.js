@@ -1,5 +1,10 @@
 import { random, round } from "../utils/math"
 
+
+/**
+ * ZzFX - Zuper Zmall Zound Zynth v1.3.1 by Frank Force
+ * MIT License
+ */
 // zzfxV - global volume
 const zzfxV=0.8
 
@@ -20,36 +25,8 @@ export const zzfx=(...t)=>zzfxP(zzfxG(...t))
 
 /**
  * ZzFX Music Renderer v2.0.3 by Keith Clark and Frank Force
+ * MIT License
  */
-
-/**
- * @typedef Channel
- * @type {Array.<Number>}
- * @property {Number} 0 - Channel instrument
- * @property {Number} 1 - Channel panning (-1 to +1)
- * @property {Number} 2 - Note
- */
-
-/**
- * @typedef Pattern
- * @type {Array.<Channel>}
- */
-
-/**
- * @typedef Instrument
- * @type {Array.<Number>} ZzFX sound parameters
- */
-
-/**
- * Generate a song
- *
- * @param {Array.<Instrument>} instruments - Array of ZzFX sound paramaters.
- * @param {Array.<Pattern>} patterns - Array of pattern data.
- * @param {Array.<Number>} sequence - Array of pattern indexes.
- * @param {Number} [speed=125] - Playback speed of the song (in BPM).
- * @returns {Array.<Array.<Number>>} Left and right channel sample data.
- */
-
 export const zzfxM = (instruments, patterns, sequence, BPM = 125) => {
     let instrumentParameters;
     let i;

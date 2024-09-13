@@ -9,7 +9,8 @@
   "devDependencies": {
     "@matterlabs/hardhat-zksync-solc": "^0.3.17",
     "dotenv-cli": "^7.4.2",
-    "hardhat": "^2.13.0"
+    "hardhat": "^2.13.0",
+    "thirdweb": "^5.53.0"
   },
   "dependencies": {
     "@thirdweb-dev/contracts": "^3.8.0",

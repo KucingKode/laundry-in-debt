@@ -18,8 +18,7 @@ export async function connectWallet() {
 
 	playerAddress.v = address;
 
-	// create web3 account
-	// code from thirdweb/adapters/ethers6.ts
+	// create web3 account that compatible with Thirdweb SDK v5.52.0
 	account.v = {
 		address,
 		signMessage: async ({ message }) => {

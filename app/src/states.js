@@ -1,4 +1,4 @@
-import { DECIMALS } from "./constants";
+import { DECIMALS, DECIMALS_BI } from "./constants";
 import { bigInt } from "./utils/math";
 
 function createState(x) {
@@ -30,9 +30,9 @@ export const pointerY = createState(0);
 export const pointerPressed = createState(false);
 
 export const machineBids = createState([
-	bigInt(100 * DECIMALS),
-	bigInt(300 * DECIMALS),
-	bigInt(600 * DECIMALS),
+	bigInt(100) * DECIMALS_BI,
+	bigInt(2500) * DECIMALS_BI,
+	bigInt(50000) * DECIMALS_BI,
 ]);
 export const machineAsks = createState([]);
 
